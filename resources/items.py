@@ -2,6 +2,7 @@ from db import items
 from flask import request
 from flask_smorest import Blueprint, abort
 from flask.views import MethodView
+from schemas import ItemUpdateSchema
 
 
 blp = Blueprint("items", __name__, description="items operations")
@@ -31,11 +32,13 @@ class AddItems(MethodView):
         
 @blp.route("/update_items")
 class UpdateItems(MethodView):
-    def post(self):
-        request_data = request.get_json()
-        store_items = request_data["items"]
+
+    #@blp.arguments(ItemUpdateSchema)
+    def put(self):
+        item_data = request.get_json()
+        store_items = item_data["items"]
         try:
-            storeid = request_data["storeid"]
+            storeid = item_data["storeid"]
             if storeid not in items.keys():
                 abort(404, message="store doesn't exist")
             # list to hold item names in the specific store
@@ -45,6 +48,8 @@ class UpdateItems(MethodView):
             return items
         except KeyError:
             return {"opps": "oops"}
+        
+
 
 @blp.route("/delete_items")
 class DeleteItems(MethodView):

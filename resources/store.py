@@ -33,9 +33,9 @@ class Store(MethodView):
     def get(self):
         return{"stores": stores}, 200
 
-    #@blp.arguments(StoreSchema)
-    def post(self):
-        store_data = request.get_json()
+    @blp.arguments(StoreSchema)
+    def post(self, store_data):
+        #store_data = request.get_json()
         store = store_data["name"]
         # if store not in stores.keys() also works
         if store not in stores:
