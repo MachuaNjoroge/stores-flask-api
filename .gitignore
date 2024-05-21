@@ -1,0 +1,8 @@
+.venv/
+.venv
+.;C
+;C
+__pycache__
+*.__pycache__
+*.pyc
+data.db
